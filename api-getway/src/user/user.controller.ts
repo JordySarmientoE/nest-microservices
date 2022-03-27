@@ -1,12 +1,14 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { ClientProxySuperFlights } from '../common/proxy/client-proxy';
 import { UserDTO } from './dto/user.dto';
 import { Observable } from 'rxjs';
 import { UserMSG } from '../common/constants';
 import { IUser } from '../common/interfaces/user.interface';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('users')
+@UseGuards(JwtAuthGuard)
 @Controller('api/user')
 export class UserController {
     constructor(private readonly clientProxy: ClientProxySuperFlights){}

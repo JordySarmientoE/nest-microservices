@@ -1,12 +1,14 @@
-import { Controller, Body, Param, Delete, Put, Get, Post, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Param, Delete, Put, Get, Post, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { ClientProxySuperFlights } from '../common/proxy/client-proxy';
 import { FlightDTO } from './dto/flight.dto';
 import { IFlight } from '../common/interfaces/flight.interface';
 import { Observable } from 'rxjs';
 import { FlightMSG, PassengerMSG } from '../common/constants';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('flights')
+@UseGuards(JwtAuthGuard)
 @Controller('api/flight')
 export class FlightController {
     constructor(private readonly clientProxy: ClientProxySuperFlights) { }
